@@ -23,10 +23,10 @@ public class Dish
 
 public enum Tag
 {
-    Vadkae,
-    Salodkae,
-
     Sniadanak,
     Abied,
     Viacera,
+
+    Vadkae,
+    Salodkae,
 }

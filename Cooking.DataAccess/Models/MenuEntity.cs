@@ -2,12 +2,15 @@
 
 namespace Cooking.DataAccess.Models;
 
-[Table("Dish")]
-public class DishEntity
+[Table("Menu")]
+public class MenuEntity
 {
     [PrimaryKey, Identity, Column(Name = "Id")]
     public int Id { get; set; }
 
-    [NotNull, Column("Name")]
+    [Column("Name")]
     public string Name { get; set; }
+
+    [Column("CreationDate")]
+    public DateTime CreationDate { get; set; }
 }
