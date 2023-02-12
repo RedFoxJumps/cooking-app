@@ -2,31 +2,27 @@
 
 public class Dish
 {
-    protected Dish()
-    { }
-
     public string Name { get; set; }
 
-    public List<Tag> Tags { get; set; } = new ();
+    public List<string> Tags { get; set; } = new ();
 
     public override string ToString()
     {
         return $"{ Name } [ { string.Join(", ", Tags) } ]";
     }
 
-    public static Dish New(string name, params Tag[] tags) => new()
+    public static Dish New(string name, params string[] tags) => new()
     {
         Name = name,
         Tags = tags.Distinct().ToList(),
     };
 }
 
-public enum Tag
+public class Tags
 {
-    Sniadanak,
-    Abied,
-    Viacera,
-
-    Vadkae,
-    Salodkae,
+    public const string Sniadanak = "Сняданак";
+    public const string Abied = "Абед";
+    public const string Viacera = "Вячэра";
+    public const string Salodkae = "Салодкае";
+    public const string Vadkae = "Вадкае";
 }

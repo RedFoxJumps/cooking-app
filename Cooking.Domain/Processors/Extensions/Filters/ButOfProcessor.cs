@@ -1,12 +1,10 @@
-﻿using Cooking.Domain.Models;
-
-namespace Cooking.Domain.Processors.Extensions.Filters;
+﻿namespace Cooking.Domain.Processors.Extensions.Filters;
 
 internal class ButOfProcessor : DishProcessorBase, IDishProcessor
 {
-    private Tag[] _tags;
+    private string[] _tags;
 
-    public ButOfProcessor(Tag[] tags)
+    public ButOfProcessor(string[] tags)
     {
         _tags = tags;
     }
@@ -20,7 +18,7 @@ internal class ButOfProcessor : DishProcessorBase, IDishProcessor
 
 public static class ButOfExtension
 {
-    public static IDishProcessor ButOf(this IDishProcessor processor, params Tag[] tags)
+    public static IDishProcessor ButOf(this IDishProcessor processor, params string[] tags)
     {
         var proc = new ButOfProcessor(tags);
         processor.Next = proc;

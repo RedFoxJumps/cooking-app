@@ -1,4 +1,5 @@
 ﻿using Cooking.DataAccess.Models;
+using Cooking.Domain.Models;
 using LinqToDB;
 using LinqToDB.Data;
 using LinqToDB.DataProvider.SQLite;
@@ -19,7 +20,13 @@ public static class Db
             return;
         }
 
-        SQLiteTools.CreateDatabase(Constants.DatabaseName);
+        try
+        {
+            SQLiteTools.CreateDatabase(Constants.DatabaseFile);
+        }
+        catch (Exception e)
+        {
+        }
         var newDb = new CookingDatabase();
 
         var blinyId = await FillDishes(newDb);
@@ -42,13 +49,13 @@ public static class Db
     {
         await db.CreateTableAsync<DishTagEntity>(tableOptions: TableOptions.CreateIfNotExists);
 
-        var sniadanak   = new DishTagEntity { Tag = DishTag.Sniadanak, };
-        var abied       = new DishTagEntity { Tag = DishTag.Abied, };
-        var viacera     = new DishTagEntity { Tag = DishTag.Viacera, };
+        var sniadanak   = new DishTagEntity { Tag = Tags.Sniadanak, };
+        var abied       = new DishTagEntity { Tag = Tags.Abied, };
+        var viacera     = new DishTagEntity { Tag = Tags.Viacera, };
         var rest = new[]
         {
-            new DishTagEntity { Tag = DishTag.Salodkae, },
-            new DishTagEntity { Tag = DishTag.Vadkae, },
+            new DishTagEntity { Tag = Tags.Salodkae, },
+            new DishTagEntity { Tag = Tags.Vadkae, },
         };
 
         await db.BulkCopyAsync(rest);

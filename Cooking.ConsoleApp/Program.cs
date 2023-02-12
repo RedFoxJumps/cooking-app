@@ -13,31 +13,31 @@ internal class Program
 {
     static Dish[] Dishes =
     {
-        Dish.New("Суп греч", Tag.Viacera, Tag.Abied, Tag.Vadkae),
-        Dish.New("Суп ріс", Tag.Viacera, Tag.Abied, Tag.Vadkae),
-        Dish.New("Суп булён", Tag.Viacera, Tag.Abied, Tag.Vadkae),
-        Dish.New("Суп фасоль", Tag.Viacera, Tag.Abied, Tag.Vadkae),
-        Dish.New("Расольнік", Tag.Viacera, Tag.Abied, Tag.Vadkae),
-        Dish.New("Боршч", Tag.Viacera, Tag.Abied, Tag.Vadkae),
-        Dish.New("Халаднік", Tag.Viacera, Tag.Abied, Tag.Vadkae),
+        Dish.New("Суп греч", Tags.Viacera, Tags.Abied, Tags.Vadkae),
+        Dish.New("Суп ріс", Tags.Viacera, Tags.Abied, Tags.Vadkae),
+        Dish.New("Суп булён", Tags.Viacera, Tags.Abied, Tags.Vadkae),
+        Dish.New("Суп фасоль", Tags.Viacera, Tags.Abied, Tags.Vadkae),
+        Dish.New("Расольнік", Tags.Viacera, Tags.Abied, Tags.Vadkae),
+        Dish.New("Боршч", Tags.Viacera, Tags.Abied, Tags.Vadkae),
+        Dish.New("Халаднік", Tags.Viacera, Tags.Abied, Tags.Vadkae),
 
-        Dish.New("Сырнікі", Tag.Sniadanak, Tag.Salodkae),
-        Dish.New("Бліны", Tag.Sniadanak, Tag.Viacera),
-        Dish.New("Бліны (з творагам, у духоўцы)", Tag.Sniadanak, Tag.Viacera, Tag.Salodkae),
-        Dish.New("Ладкі (барбуз)", Tag.Sniadanak, Tag.Viacera, Tag.Abied),
-        Dish.New("Бліны з мачанкай", Tag.Sniadanak, Tag.Viacera, Tag.Abied),
+        Dish.New("Сырнікі", Tags.Sniadanak, Tags.Salodkae),
+        Dish.New("Бліны", Tags.Sniadanak, Tags.Viacera),
+        Dish.New("Бліны (з творагам, у духоўцы)", Tags.Sniadanak, Tags.Viacera, Tags.Salodkae),
+        Dish.New("Ладкі (барбуз)", Tags.Sniadanak, Tags.Viacera, Tags.Abied),
+        Dish.New("Бліны з мачанкай", Tags.Sniadanak, Tags.Viacera, Tags.Abied),
 
-        Dish.New("Макарон", Tag.Viacera, Tag.Abied, Tag.Sniadanak),
-        Dish.New("Макарон з памідорам", Tag.Viacera, Tag.Abied, Tag.Sniadanak),
-        Dish.New("Бабка", Tag.Viacera, Tag.Abied, Tag.Sniadanak),
-        Dish.New("Картопля", Tag.Viacera, Tag.Abied, Tag.Sniadanak),
+        Dish.New("Макарон", Tags.Viacera, Tags.Abied, Tags.Sniadanak),
+        Dish.New("Макарон з памідорам", Tags.Viacera, Tags.Abied, Tags.Sniadanak),
+        Dish.New("Бабка", Tags.Viacera, Tags.Abied, Tags.Sniadanak),
+        Dish.New("Картопля", Tags.Viacera, Tags.Abied, Tags.Sniadanak),
 
-        Dish.New("Плоў", Tag.Viacera, Tag.Abied),
-        Dish.New("Рыс", Tag.Viacera, Tag.Abied),
-        Dish.New("Гречіха", Tag.Sniadanak, Tag.Viacera, Tag.Abied),
+        Dish.New("Плоў", Tags.Viacera, Tags.Abied),
+        Dish.New("Рыс", Tags.Viacera, Tags.Abied),
+        Dish.New("Гречіха", Tags.Sniadanak, Tags.Viacera, Tags.Abied),
 
-        Dish.New("Галубцы", Tag.Sniadanak, Tag.Viacera, Tag.Abied),
-        Dish.New("Перцы", Tag.Sniadanak, Tag.Viacera, Tag.Abied),
+        Dish.New("Галубцы", Tags.Sniadanak, Tags.Viacera, Tags.Abied),
+        Dish.New("Перцы", Tags.Sniadanak, Tags.Viacera, Tags.Abied),
     };
 
     static void Main(string[] args)
@@ -62,21 +62,21 @@ internal class Program
         var extensionsMenu = Dishes.InitializeMenu();
         extensionsMenu
             .ExcludeRecent(Enumerable.Empty<Dish>())
-            .AddToMenu(FilterType.OfType, Tag.Sniadanak).ButOf(Tag.Salodkae).Select(ResultSelector.Single)
-            .AddToMenu(FilterType.Not, Tag.Sniadanak, Tag.Abied).Select(ResultSelector.All)
+            .AddToMenu(FilterType.OfType, Tags.Sniadanak).ButOf(Tags.Salodkae).Select(ResultSelector.Single)
+            .AddToMenu(FilterType.Not, Tags.Sniadanak, Tags.Abied).Select(ResultSelector.All)
             ;
 
         var extensiveGeneration = extensionsMenu.MakeMenu();
         Print(extensiveGeneration, "Extensions");
 
         var ensuranceOne = Dishes
-            .Where(x => x.Tags.Contains(Tag.Sniadanak))
-            .Where(x => !x.Tags.Contains(Tag.Salodkae))
+            .Where(x => x.Tags.Contains(Tags.Sniadanak))
+            .Where(x => !x.Tags.Contains(Tags.Salodkae))
             .First();
 
         var ensuranceAll = Dishes
-            .Where(x => !x.Tags.Contains(Tag.Sniadanak))
-            .Where(x => !x.Tags.Contains(Tag.Abied))
+            .Where(x => !x.Tags.Contains(Tags.Sniadanak))
+            .Where(x => !x.Tags.Contains(Tags.Abied))
             .Append(ensuranceOne);
 
         Print(ensuranceAll, "Ensurance");
@@ -92,9 +92,9 @@ internal class Program
     {
         return new[]
         {
-            Dishes.Random(Tag.Sniadanak),
-            Dishes.Random(Tag.Abied),
-            Dishes.Random(Tag.Viacera),
+            Dishes.Random(Tags.Sniadanak),
+            Dishes.Random(Tags.Abied),
+            Dishes.Random(Tags.Viacera),
         }
         .Shuffle()
         .Take(v)

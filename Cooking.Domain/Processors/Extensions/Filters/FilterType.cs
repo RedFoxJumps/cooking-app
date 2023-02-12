@@ -10,7 +10,7 @@ public abstract class FilterType
 
     public static FilterType Only => OnlyFilterType.Instance;
 
-    public abstract IEnumerable<Dish> Filter(IEnumerable<Dish> dishes, IEnumerable<Tag> tags);
+    public abstract IEnumerable<Dish> Filter(IEnumerable<Dish> dishes, IEnumerable<string> tags);
 }
 
 internal class OfTypeFilterType : FilterType
@@ -20,7 +20,7 @@ internal class OfTypeFilterType : FilterType
 
     internal static FilterType Instance => FilterTypeLazy.Value;
 
-    public override IEnumerable<Dish> Filter(IEnumerable<Dish> dishes, IEnumerable<Tag> tags)
+    public override IEnumerable<Dish> Filter(IEnumerable<Dish> dishes, IEnumerable<string> tags)
     {
         return dishes.Where(x => x.Tags.Intersect(tags).Any());
     }
@@ -33,7 +33,7 @@ internal class NotFilterType : FilterType
 
     internal static FilterType Instance => FilterTypeLazy.Value;
 
-    public override IEnumerable<Dish> Filter(IEnumerable<Dish> dishes, IEnumerable<Tag> tags)
+    public override IEnumerable<Dish> Filter(IEnumerable<Dish> dishes, IEnumerable<string> tags)
     {
         var v = dishes.Where(x => !x.Tags.Intersect(tags).Any());
         return v;
@@ -48,7 +48,7 @@ internal class OnlyFilterType : FilterType
 
     internal static FilterType Instance => FilterTypeLazy.Value;
 
-    public override IEnumerable<Dish> Filter(IEnumerable<Dish> dishes, IEnumerable<Tag> tags)
+    public override IEnumerable<Dish> Filter(IEnumerable<Dish> dishes, IEnumerable<string> tags)
     {
         return dishes
             .Where(x => tags.OrderBy(x => x)

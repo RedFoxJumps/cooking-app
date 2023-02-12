@@ -9,18 +9,8 @@ public class DishTagEntity
     public int Id { get; set; }
 
     [NotNull, Column("Tag")]
-    public DishTag Tag { get; set; }
+    public string Tag { get; set; }
 
     [Nullable, Column("Description")]
     public string Description { get; set; }
-}
-
-public enum DishTag
-{
-    Sniadanak,
-    Abied,
-    Viacera,
-
-    Vadkae,
-    Salodkae,
 }

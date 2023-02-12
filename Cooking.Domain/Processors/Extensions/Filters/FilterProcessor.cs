@@ -6,9 +6,9 @@ namespace Cooking.Domain.Processors.Extensions.Filters;
 internal class FilterProcessor : DishProcessorBase, IDishProcessor
 {
     private readonly FilterType _filterType;
-    private readonly IEnumerable<Tag> _tags;
+    private readonly IEnumerable<string> _tags;
 
-    public FilterProcessor(FilterType filterType, IEnumerable<Tag> tags)
+    public FilterProcessor(FilterType filterType, IEnumerable<string> tags)
     {
         _filterType = filterType;
         _tags = tags;
@@ -30,7 +30,7 @@ internal class FilterProcessor : DishProcessorBase, IDishProcessor
 
 public static class FilterExtension
 {
-    public static IDishProcessor AddToMenu(this IDishProcessor processor, FilterType filterType, params Tag[] tags)
+    public static IDishProcessor AddToMenu(this IDishProcessor processor, FilterType filterType, params string[] tags)
     {
         var proc = new FilterProcessor(filterType, tags);
         processor.Next = proc;

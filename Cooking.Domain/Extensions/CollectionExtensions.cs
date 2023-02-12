@@ -1,5 +1,4 @@
 ﻿using Cooking.Domain.Models;
-using Cooking.Domain.Processors.Extensions;
 
 namespace Cooking.Domain.Extensions;
 
@@ -7,7 +6,7 @@ public static class CollectionExtensions
 {
     private static Lazy<Random> r = new (() => new Random(123));
 
-    public static T Random<T>(this IEnumerable<T> list, params Tag[] tags)
+    public static T Random<T>(this IEnumerable<T> list, params string[] tags)
         where T : Dish
     {
         var filtered = list.Where(x => x.Tags.Any(tag => tags.Contains(tag)));
