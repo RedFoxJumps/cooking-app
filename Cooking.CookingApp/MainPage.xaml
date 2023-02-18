@@ -35,6 +35,13 @@
                 Clicked="OnCounterClicked"
                 HorizontalOptions="Center" />
 
+            <Button
+                x:Name="NavigateBtn"
+                Text="Да страваў"
+                SemanticProperties.Hint="Перанакіроўвае да каталёгу страваў"
+                Clicked="OnNavigateClicked"
+                HorizontalOptions="Center" />
+
         </VerticalStackLayout>
     </ScrollView>
 

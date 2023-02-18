@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Cooking.CookingApp.Dishes.DishView"
+             xmlns:domain="clr-namespace:Cooking.Domain.Models;assembly=Cooking.Domain"
+             x:DataType="domain:Dish"
+>
+    
+    <Grid BackgroundColor="#e3e3e3">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Text="{Binding Name}" />
+
+        <CollectionView Grid.Row="1"
+                        Background="Teal"
+                        SelectionMode="Single"
+                        ItemsSource="{Binding Tags}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Horizontal" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="x:String">
+                    <Frame Background="LightBlue" CornerRadius="3">
+                        <Label Text="{Binding .}" />
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentView>

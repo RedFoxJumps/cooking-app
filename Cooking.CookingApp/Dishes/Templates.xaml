@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Cooking.CookingApp.Dishes.Templates"
+             xmlns:domain="clr-namespace:Cooking.Domain.Models;assembly=Cooking.Domain"
+             xmlns:vm="clr-namespace:Cooking.CookingApp.Dishes"
+            >
+
+    <DataTemplate x:Key="DishItemTemplate" x:DataType="domain:Dish">
+        <SwipeView>
+            <vm:DishView />
+
+            <SwipeView.RightItems>
+                <SwipeItem 
+                    Text="Выдаліць (не работае)" BackgroundColor="LightCoral" 
+                    Command="{Binding 
+                        Source={RelativeSource AncestorType={x:Type vm:DishCatalogueViewModel}},
+                        Path=NigerComand}"
+                    CommandParameter="{Binding .}"
+                />
+            </SwipeView.RightItems>
+        </SwipeView>
+    </DataTemplate>
+
+</ResourceDictionary>

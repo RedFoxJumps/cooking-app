@@ -16,4 +16,8 @@
 	<PackageReference Include="System.IO.Abstractions" Version="19.1.14" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Cooking.Domain\Cooking.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

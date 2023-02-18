@@ -1,4 +1,6 @@
-﻿namespace Cooking.CookingApp
+﻿using Cooking.CookingApp.Dishes;
+
+namespace Cooking.CookingApp
 {
     public partial class MainPage : ContentPage
     {
@@ -19,6 +21,11 @@
                 CounterBtn.Text = $"Clicked {count} times";
 
             SemanticScreenReader.Announce(CounterBtn.Text);
+        }
+
+        private async void OnNavigateClicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync(nameof(DishCatalogueView));
         }
     }
 }
