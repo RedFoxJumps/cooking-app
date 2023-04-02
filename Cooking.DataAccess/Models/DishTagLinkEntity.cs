@@ -3,7 +3,7 @@
 namespace Cooking.DataAccess.Models;
 
 [Table("DishTagLink")]
-public class DishTagLinkEntity
+public class DishTagLinkEntity : IIdentity<int>
 {
     [PrimaryKey, Identity, Column(Name = "Id")]
     public int Id { get; set; }

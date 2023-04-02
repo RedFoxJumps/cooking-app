@@ -3,7 +3,7 @@
 namespace Cooking.DataAccess.Models;
 
 [Table("Menu")]
-public class MenuEntity
+public class MenuEntity : IIdentity<int>
 {
     [PrimaryKey, Identity, Column(Name = "Id")]
     public int Id { get; set; }
