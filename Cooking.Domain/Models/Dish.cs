@@ -2,9 +2,11 @@
 
 public class Dish
 {
+    public int? Id { get; set; }
+
     public string Name { get; set; }
 
-    public List<string> Tags { get; set; } = new ();
+    public List<DishTag> Tags { get; set; } = new ();
 
     public override string ToString()
     {
@@ -14,7 +16,10 @@ public class Dish
     public static Dish New(string name, params string[] tags) => new()
     {
         Name = name,
-        Tags = tags.Distinct().ToList(),
+        Tags = tags
+            .Distinct()
+            .Select(x => new DishTag { Description = x, })
+            .ToList(),
     };
 }
 
