@@ -22,6 +22,11 @@ public static class Db
 
         try
         {
+            if (!_fileSystem.Directory.Exists(Constants.Directory))
+            {
+                _fileSystem.Directory.CreateDirectory(Constants.Directory);
+            }
+
             SQLiteTools.CreateDatabase(Constants.DatabaseFile);
         }
         catch (Exception e)
