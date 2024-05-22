@@ -5,18 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Cooking.Desktop"
         mc:Ignorable="d"
-        Title="MainView" Height="450" Width="800"
-        d:DataContext="{d:DesignInstance local:IMainViewModel}">
+        Title="Main View" Height="450" Width="800"
+        d:DataContext="{d:DesignInstance local:MainViewModel}">
     
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <ContentControl Grid.Column="0" Content="{Binding MenuHistoryViewModel}" />
-        <ContentControl Grid.Column="1" Content="{Binding CatalogueViewModel}" />
-        <ContentControl Grid.Column="2" Content="{Binding NewMenuViewModel}" />
+        <ContentControl Grid.Column="0" Content="{Binding CurrentView}" />
     </Grid>
 </Window>

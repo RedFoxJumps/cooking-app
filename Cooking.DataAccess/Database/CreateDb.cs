@@ -15,7 +15,7 @@ public static class Db
     {
         SQLiteTools.AlwaysCheckDbNull = true;
 
-        if (_fileSystem.File.Exists(Constants.DatabaseFile))
+        if (_fileSystem.File.Exists(Constants.DatabaseFilePath))
         {
             return;
         }
@@ -27,7 +27,7 @@ public static class Db
                 _fileSystem.Directory.CreateDirectory(Constants.Directory);
             }
 
-            SQLiteTools.CreateDatabase(Constants.DatabaseFile);
+            SQLiteTools.CreateDatabase(Constants.DatabaseFilePath);
         }
         catch (Exception e)
         {

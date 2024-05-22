@@ -1,10 +1,6 @@
-﻿using Cooking.Contracts.Services;
+﻿using Cooking.Contracts.Models;
+using Cooking.Contracts.Services;
 using Cooking.DataAccess.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Cooking.Services;
 
@@ -15,5 +11,25 @@ internal class MenuService : IMenuService
     public MenuService(ICookingContext cookingContext)
 	{
         _cookingContext = cookingContext;
+    }
+
+    public Task<IReadOnlyCollection<Menu>> GetMenuHistory(TimeSpan pastPeriod)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<IReadOnlyCollection<Menu>> GetMenuHistory(DateOnly from, DateOnly to)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Menu> MakeMenu(IList<MenuCreationOptions> menuOptions, DateOnly? excludeDishesPastDate = null, string? note = null)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Menu> RepeatMenu(DateTime fromDate)
+    {
+        throw new NotImplementedException();
     }
 }

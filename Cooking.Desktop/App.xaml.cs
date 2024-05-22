@@ -20,7 +20,7 @@ public partial class App : Application
         hostBuilder.ConfigureServices(services =>
         {
             services.AddScoped<MainView>().AddScoped<IMainViewModel, MainViewModel>();
-            services.AddScoped<DishEditorView>().AddScoped<DishEditorViewModel, DishEditorViewModel>();
+            services.AddScoped<DishEditorView>().AddScoped<IDishEditorViewModel, DishEditorViewModel>();
             services.AddScoped<NewMenuView>().AddScoped<INewMenuViewModel, NewMenuViewModel>();
             services.AddScoped<MenuHistoryView>().AddScoped<IMenuHistoryViewModel, MenuHistoryViewModel>();
             services.AddScoped<CatalogueView>().AddScoped<ICatalogueViewModel, CatalogueViewModel>();
@@ -30,8 +30,8 @@ public partial class App : Application
             services.AddScoped<IAsyncRunner, AsyncRunner>();
             services.AddScoped<INavigator, Navigator>();
 
-            //services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            //services.AddScoped<CookingDatabase>();
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<CookingDatabase>();
             services.AddScoped<ICookingContext, CookingContext>();
         });
 

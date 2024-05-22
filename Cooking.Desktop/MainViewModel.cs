@@ -1,12 +1,13 @@
 ﻿using Cooking.Desktop.DishArea;
 using Cooking.Desktop.MenuArea;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Cooking.Desktop;
 
 public interface IMainViewModel
 {
-    IDishEditorViewModel NewDishViewModel { get; }
+    object CurrentView { get; }
 
     INewMenuViewModel NewMenuViewModel { get; }
 
@@ -18,19 +19,19 @@ public interface IMainViewModel
 internal partial class MainViewModel : ViewModelBase, IMainViewModel
 {
     public MainViewModel(
-        IDishEditorViewModel newDishViewModel,
         IMenuHistoryViewModel menuHistoryViewModel,
         INewMenuViewModel newMenuViewModel,
         ICatalogueViewModel catalogueViewModel)
     {
-        NewDishViewModel = newDishViewModel;
         NewMenuViewModel = newMenuViewModel;
         MenuHistoryViewModel = menuHistoryViewModel;
         CatalogueViewModel = catalogueViewModel;
+
+        CurrentView = CatalogueViewModel;
     }
 
     [ObservableProperty]
-    private IDishEditorViewModel _newDishViewModel;
+    private object _currentView;
 
     [ObservableProperty]
     private INewMenuViewModel _newMenuViewModel;
@@ -40,4 +41,7 @@ internal partial class MainViewModel : ViewModelBase, IMainViewModel
 
     [ObservableProperty]
     private ICatalogueViewModel _catalogueViewModel;
+
+    [RelayCommand]
+    private void OpenCatalogue() => CurrentView = CatalogueViewModel;
 }

@@ -9,7 +9,11 @@
 
     <sys:String x:Key="Options">Options</sys:String>
     <sys:String x:Key="Create">Create</sys:String>
+    <sys:String x:Key="AddPlus">Add +</sys:String>
     <sys:String x:Key="Edit">Edit</sys:String>
     <sys:String x:Key="Delete">Delete</sys:String>
+
+    <sys:String x:Key="Name">Name</sys:String>
+    <sys:String x:Key="Description">Description</sys:String>
     
 </ResourceDictionary>

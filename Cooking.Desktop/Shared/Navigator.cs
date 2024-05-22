@@ -1,12 +1,13 @@
-﻿using Cooking.Contracts.Models;
+﻿using System;
 using Cooking.Desktop.DishArea;
-using Cooking.Desktop.Shared.Operations;
 
 namespace Cooking.Desktop.Shared;
 
-public interface INavigator
+internal interface INavigator
 {
-    void ShowDishEditor(Dish dish, OperationOptions<Dish> options);
+    object CurrentViewModel { get; }
+
+    void OpenDishEditor(Action<IDishEditorViewModel> initialize);
 }
 
 internal class Navigator : INavigator
@@ -20,10 +21,13 @@ internal class Navigator : INavigator
         _dishEditorViewModel = dishEditorViewModel;
     }
 
-    public void ShowDishEditor(Dish dish, OperationOptions<Dish> options)
+    public object CurrentViewModel { get; protected set; }
+
+    public void OpenDishEditor(Action<IDishEditorViewModel> initialize)
     {
-        _dishEditorViewModel.Operate(dish, options);
-        _dishEditorView.DataContext = _dishEditorViewModel;
-        _dishEditorView.ShowDialog();
+        initialize?.Invoke(_dishEditorViewModel);
+        var view = new DishEditorView();
+        view.DataContext = _dishEditorViewModel;
+        view.ShowDialog();
     }
 }

@@ -9,7 +9,7 @@
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance models:Dish}"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <Grid Background="Teal">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />
@@ -24,11 +24,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <ItemsControl Grid.Column="0">
-                
-            </ItemsControl>
-            
-            <Button
+            <ItemsControl Grid.Column="0" ItemsSource="{Binding Tags}" />
         </Grid>
     </Grid>
 </UserControl>

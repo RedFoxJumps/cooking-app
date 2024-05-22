@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 
 namespace Cooking.Desktop.DishArea;
 
 public interface IDishViewModel
 {
-    ICommand AddTagCommand { get; }
+    IRelayCommand AddTagCommand { get; }
 
-    ICommand RemoveTagCommand { get; }
+    IRelayCommand RemoveTagCommand { get; }
 }
 
-internal class DishViewModel : ViewModelBase, IDishViewModel
+internal partial class DishViewModel : ViewModelBase, IDishViewModel
 {
+    [RelayCommand]
+    private void AddTag() { }
+
+    [RelayCommand]
+    private void RemoveTag() { }
 }

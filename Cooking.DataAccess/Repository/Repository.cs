@@ -1,4 +1,5 @@
 ﻿using Cooking.DataAccess.Database;
+using Cooking.DataAccess.Models;
 using LinqToDB;
 
 namespace Cooking.DataAccess.Repository;
@@ -8,9 +9,11 @@ public interface IRepository<TEntity>
 {
     Task<TEntity> GetById(int id);
 
-	IQueryable<TEntity> GetAll();
+    IQueryable<TEntity> GetAll();
 
     Task<int> Insert(TEntity entity);
+
+    Task Insert(ICollection<TEntity> entities);
 }
 
 public class Repository<TEntity> : IRepository<TEntity>
@@ -30,14 +33,21 @@ public class Repository<TEntity> : IRepository<TEntity>
     public Task<TEntity> GetById(int id) => _table.FirstOrDefaultAsync(x => x.Id == id);
 
     // TODO: insertOrUpdate ?
-	public async Task<int> Insert(TEntity entity)
+    public async Task<int> Insert(TEntity entity)
 	{
         var id = await _cookingDatabase.InsertWithInt32IdentityAsync(entity);
         return entity.Id = id;
     }
 
-	public IQueryable<TEntity> GetAll()
-	{
-		return _table;
+    /// <summary>
+    /// Inserts a collection of <typeparamref name="TEntity"/> into database with object id update.
+    /// </summary>
+    public async Task Insert(ICollection<TEntity> entities)
+    {
+        var insert = (TEntity e) => Insert(e)
+            .ContinueWith(t => e.Id == t.Result);
+
+        var insertions = entities.Select(x => Insert(x).ContinueWith(t => x.Id = t.Result));
+        await Task.WhenAll(insertions);
     }
 }
