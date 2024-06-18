@@ -42,6 +42,11 @@
                 Clicked="OnNavigateClicked"
                 HorizontalOptions="Center" />
 
+            <Button
+                Text="Дадаць страву"
+                Clicked="OnNavigateToAddClicked"
+                HorizontalOptions="Center" />
+
         </VerticalStackLayout>
     </ScrollView>
 

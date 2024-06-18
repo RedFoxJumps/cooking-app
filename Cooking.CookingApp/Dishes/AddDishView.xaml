@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Cooking.CookingApp.Dishes.AddDishView"
+             Title="AddDishView"
+             x:DataType="local:AddDishViewModel"
+             xmlns:local="clr-namespace:Cooking.CookingApp.Dishes"
+             xmlns:domain="clr-namespace:Cooking.Domain.Models;assembly=Cooking.Domain"
+             
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             >
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition /> <!-- nazva + tag -->
+            <RowDefinition /> <!-- tags1 -->
+            <RowDefinition /> <!-- tags2 -->
+            <RowDefinition /> <!-- buttons -->
+        </Grid.RowDefinitions>
+
+        <HorizontalStackLayout Grid.Row="0" Padding="20">
+            <VerticalStackLayout Padding="20">
+                <Label Text="Назва стравы" />
+                <Entry
+                    Placeholder="Страва"
+                    Text="{Binding Dish.Name}" />
+            </VerticalStackLayout>
+            
+            <VerticalStackLayout Padding="20">
+                <Label Text="Новы тэг" />
+                <Entry
+                    Placeholder="Назва тэгу"
+                    Text="{Binding Tag.Tag}" />
+                <Frame BackgroundColor="AliceBlue">
+
+                    <VerticalStackLayout>
+                        
+                        <!--<mdc:Chip Text="Dude" Style="{StaticResource AssistElevatedChipStyle}" />-->
+                        <!--<materialDesign:Chip Padding="32" Margin="16">
+                            <Label Text="Dude" />
+                        </materialDesign:Chip>-->
+
+                        <Label Text="Checkbox" />
+                        <CheckBox Style="{StaticResource MaterialDesignFilterChipCheckBox}" IsChecked="True">
+                            <CheckBox.Resources>
+                                <ResourceDictionary>
+                                    <ResourceDictionary.MergedDictionaries>
+                                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
+                                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+                                    </ResourceDictionary.MergedDictionaries>
+                                </ResourceDictionary>
+                            </CheckBox.Resources>
+                        </CheckBox>
+                    </VerticalStackLayout>
+                    
+                </Frame>
+            </VerticalStackLayout>
+        </HorizontalStackLayout>
+
+        <VerticalStackLayout Grid.Row="1">
+            <Label Text="Тэгі стравы" />
+            <CollectionView Background="red"
+                ItemsSource="{Binding DishTags}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="domain:DishTag">
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+                <!--ItemTemplate="{StaticResource DishTagItemTemplate}" />-->
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Grid.Row="2">
+            <Label Text="Усе тэгі" />
+            <CollectionView Background="teal"
+                ItemsSource="{Binding AllTags}"
+                ItemTemplate="{StaticResource DishTagItemTemplate}" />
+        </VerticalStackLayout>
+        
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            
+            <Button Grid.Column="0"
+                Text="Стварыць новую"
+                Command="{Binding NewDishCommand}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
+            
+            <Button Grid.Column="1"
+                Text="Дадаць"
+                Command="{Binding SaveDishCommand}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
+        </Grid>
+    </Grid>
+</ContentPage>

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Cooking.CookingApp.Dishes"
              xmlns:domain="clr-namespace:Cooking.Domain.Models;assembly=Cooking.Domain"
              x:DataType="local:DishCatalogueViewModel"
-             >
+>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -29,15 +29,14 @@
             </CollectionView.Footer>
         </CollectionView>
 
-        <StackLayout Margin="10"
-                     Grid.Row="1"
-                     HorizontalOptions="Center"
-                     Orientation="Horizontal">
+        <StackLayout Grid.Row="1"
+            Margin="10"
+            HorizontalOptions="Center"
+            Orientation="Horizontal">
             
             <Button
                 Text="Спампаваць стравы"
-                Command="{Binding RefreshDishListCommand}"
-            />
+                Command="{Binding RefreshDishListCommand}" />
 
         </StackLayout>
     </Grid>

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<!--<TargetFrameworks>net7.0-android;net7.0-ios;net7.0-maccatalyst</TargetFrameworks>-->
+		<TargetFrameworks>net7.0-android;net7.0-ios;net7.0-maccatalyst</TargetFrameworks>
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
@@ -15,9 +15,8 @@
 		<ApplicationTitle>Cooking.CookingApp</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.valoshka.cooking.cookingapp</ApplicationId>
-		<ApplicationIdGuid>81CBCB89-2EBE-4CA3-AEE8-EBCB8B04558D</ApplicationIdGuid>
-		<!--<ApplicationIdGuid>71CBCB89-2EBE-4CA3-AEE8-EBCB8B04558D</ApplicationIdGuid>-->
+		<ApplicationId>com.valoshkasean.cooking.cookingapp</ApplicationId>
+		<ApplicationIdGuid>71CBCB89-2EBE-4CA3-AEE8-EBCB8B04558D</ApplicationIdGuid>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
@@ -29,6 +28,52 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android|AnyCPU'">
+	  <ApplicationId>com.valoshka.cooking.cookingapp</ApplicationId>
+	  <ApplicationTitle>Cooking.CookingApp</ApplicationTitle>
+	  <ApplicationIdGuid>N1CBCB89-2EBE-4CA3-AEE8-EBCB8B04558D</ApplicationIdGuid>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android|AnyCPU'">
+	  <ApplicationId>com.valoshka.cooking.cookingapp</ApplicationId>
+	  <ApplicationTitle>Cooking.CookingApp</ApplicationTitle>
+	  <ApplicationIdGuid>N1CBCB89-2EBE-4CA3-AEE8-EBCB8B04558D</ApplicationIdGuid>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-maccatalyst|AnyCPU'">
+	  <ApplicationId>com.valoshka.cooking.cookingapp</ApplicationId>
+	  <ApplicationTitle>Cooking.CookingApp</ApplicationTitle>
+	  <ApplicationIdGuid>N1CBCB89-2EBE-4CA3-AEE8-EBCB8B04558D</ApplicationIdGuid>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-maccatalyst|AnyCPU'">
+	  <ApplicationId>com.valoshka.cooking.cookingapp</ApplicationId>
+	  <ApplicationTitle>Cooking.CookingApp</ApplicationTitle>
+	  <ApplicationIdGuid>N1CBCB89-2EBE-4CA3-AEE8-EBCB8B04558D</ApplicationIdGuid>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|AnyCPU'">
+	  <ApplicationId>com.valoshka.cooking.cookingapp</ApplicationId>
+	  <ApplicationTitle>Cooking.CookingApp</ApplicationTitle>
+	  <ApplicationIdGuid>N1CBCB89-2EBE-4CA3-AEE8-EBCB8B04558D</ApplicationIdGuid>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.19041.0|AnyCPU'">
+	  <ApplicationId>com.valoshka.cooking.cookingapp</ApplicationId>
+	  <ApplicationTitle>Cooking.CookingApp</ApplicationTitle>
+	  <ApplicationIdGuid>N1CBCB89-2EBE-4CA3-AEE8-EBCB8B04558D</ApplicationIdGuid>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
+	  <ApplicationIdGuid>N1CBCB89-2EBE-4CA3-AEE8-EBCB8B04558D</ApplicationIdGuid>
+	  <ApplicationId>com.valoshka.cooking.cookingapp</ApplicationId>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|AnyCPU'">
+	  <ApplicationIdGuid>N1CBCB89-2EBE-4CA3-AEE8-EBCB8B04558D</ApplicationIdGuid>
+	  <ApplicationId>com.valoshka.cooking.cookingapp</ApplicationId>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -51,7 +96,6 @@
 
 	<ItemGroup>
 	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
-	  <PackageReference Include="MaterialDesignThemes" Version="4.8.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -60,9 +104,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Dishes\AddDishView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	  <MauiXaml Update="Dishes\DishCatalogueView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -70,12 +111,6 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Dishes\Templates.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Tags\DishTagView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Tags\Templates.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

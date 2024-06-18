@@ -1,18 +1,18 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Cooking.CookingApp.Retrievers;
+using Cooking.CookingApp.Services;
 using Cooking.Domain.Models;
 
 namespace Cooking.CookingApp.Dishes;
 
 public partial class DishCatalogueViewModel : ObservableObject
 {
-    private readonly IDishesRetriever dishesRetriever;
+    private readonly IDishesService dishesRetriever;
 
     [ObservableProperty]
     private List<Dish> dishes;
 
-    public DishCatalogueViewModel(IDishesRetriever dishesRetriever)
+    public DishCatalogueViewModel(IDishesService dishesRetriever)
     {
         this.dishesRetriever = dishesRetriever;
     }

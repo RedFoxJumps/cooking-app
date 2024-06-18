@@ -4,6 +4,7 @@
              x:Class="Cooking.CookingApp.Dishes.Templates"
              xmlns:domain="clr-namespace:Cooking.Domain.Models;assembly=Cooking.Domain"
              xmlns:vm="clr-namespace:Cooking.CookingApp.Dishes"
+                    
             >
 
     <DataTemplate x:Key="DishItemTemplate" x:DataType="domain:Dish">

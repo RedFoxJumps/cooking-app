@@ -27,5 +27,10 @@ namespace Cooking.CookingApp
         {
             await Shell.Current.GoToAsync(nameof(DishCatalogueView));
         }
+
+        private async void OnNavigateToAddClicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync(nameof(AddDishView));
+        }
     }
 }
