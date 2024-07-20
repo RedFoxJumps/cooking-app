@@ -20,13 +20,15 @@
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"
                     Command="{Binding OkCommand}"
-                    Content="{DynamicResource Ok}" />
+                    Content="{DynamicResource Ok}"
+                    Margin="5"/>
 
             <Button Grid.Column="1"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"
                     Command="{Binding CancelCommand}"
-                    Content="{DynamicResource Cancel}" />
+                    Content="{DynamicResource Cancel}" 
+                    Margin="5"/>
         </Grid>
     </GroupBox>
 </UserControl>

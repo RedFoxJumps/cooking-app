@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Cooking.Desktop.DishArea.TagButtonView"
+﻿<UserControl x:Class="Cooking.Desktop.DishArea.TagInputView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -9,7 +9,15 @@
              d:DataContext="{d:DesignInstance local:ITagViewModel}"
              >
     <Grid>
-        <Button Content="{Binding Tag}"
-                Command="{Binding OnClickCommand}" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Column="0" Text="{Binding Tag}" />
+        <Button Grid.Column="1"
+                Content="{DynamicResource AddPlus}"
+                Command="{Binding OnClickCommand}"
+                CommandParameter="{Binding .}"/>
     </Grid>
 </UserControl>

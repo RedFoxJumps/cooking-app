@@ -15,5 +15,7 @@
 
     <sys:String x:Key="Name">Name</sys:String>
     <sys:String x:Key="Description">Description</sys:String>
+    <sys:String x:Key="AppliedTags">Applied tags</sys:String>
+    <sys:String x:Key="AllTags">All tags</sys:String>
     
 </ResourceDictionary>

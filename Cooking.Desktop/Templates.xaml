@@ -33,5 +33,9 @@
     <DataTemplate DataType="{x:Type dish:TagButtonViewModel}">
         <dish:TagButtonView />
     </DataTemplate>
+
+    <DataTemplate DataType="{x:Type dish:TagInputViewModel}">
+        <dish:TagInputView />
+    </DataTemplate>
     
 </ResourceDictionary>

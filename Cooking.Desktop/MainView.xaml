@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Cooking.Desktop"
         mc:Ignorable="d"
         Title="Main View" Height="450" Width="800"
+        ResizeMode="CanResizeWithGrip"
         d:DataContext="{d:DesignInstance local:MainViewModel}">
     
     <Grid>
