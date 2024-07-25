@@ -2,6 +2,6 @@
 
 namespace Cooking.Desktop;
 
-internal partial class ViewModelBase : ObservableObject
+public partial class ViewModelBase : ObservableObject
 {
 }

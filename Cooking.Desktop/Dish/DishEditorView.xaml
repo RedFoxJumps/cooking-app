@@ -55,7 +55,7 @@
                     </ItemsControl>
                 </GroupBox>
 
-                <GroupBox Grid.Column="1" Header="{DynamicResource AllTags}" Background="LightPink">
+                <GroupBox Grid.Column="1" Header="{DynamicResource AllTags}" Background="LightYellow">
                     <ItemsControl ItemsSource="{Binding ExistingTags}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>

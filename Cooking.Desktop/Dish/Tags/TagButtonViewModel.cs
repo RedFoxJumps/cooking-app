@@ -11,7 +11,7 @@ internal partial class TagButtonViewModel : ITagViewModel
         OnClickCommand = new RelayCommand<ITagViewModel>(onClickAction);
     }
 
-    public string Tag { get; }
+    public string Tag { get; set; }
 
     public IRelayCommand<ITagViewModel> OnClickCommand { get; }
 }

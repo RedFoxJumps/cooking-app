@@ -17,6 +17,8 @@ public interface ICatalogueViewModel
     IAsyncRelayCommand ShowDishEditViewCommand { get; }
 
     ObservableCollection<Dish> Dishes { get; }
+
+    Dish? SelectedDish { get; }
 }
 
 internal partial class CatalogueViewModel : ViewModelBase, ICatalogueViewModel

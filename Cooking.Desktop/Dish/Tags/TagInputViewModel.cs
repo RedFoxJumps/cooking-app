@@ -1,17 +1,18 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 namespace Cooking.Desktop.DishArea;
 
-public class TagInputViewModel : ITagViewModel
+internal partial class TagInputViewModel : ViewModelBase, ITagViewModel
 {
-    public TagInputViewModel(Action<ITagViewModel?> onClickAction, string tag)
+    public TagInputViewModel(IRelayCommand<ITagViewModel> clickCommand)
     {
-        Tag = tag;
-        OnClickCommand = new RelayCommand<ITagViewModel>(onClickAction);
+        Tag = "";
+        OnClickCommand = clickCommand;
     }
 
-    public string Tag { get; }
+    [ObservableProperty]
+    private string _tag;
 
     public IRelayCommand<ITagViewModel> OnClickCommand { get; }
 }

@@ -16,8 +16,6 @@ public interface IDishEditorViewModel : IObjectOperator<Dish, DishEditorParams>
 {
     IOkCancelViewModel OkCancelViewModel { get; }
 
-    IAsyncRelayCommand<string> CreateNewTagCommand { get; }
-
     string DishName { get; set; }
 
     string DishDescription { get; set; }
@@ -42,6 +40,8 @@ internal partial class DishEditorViewModel : ViewModelBase, IDishEditorViewModel
         };
     }
 
+    #region mvvm
+
     protected Action<Dish>? CurrentOperationCallback { get; set; }
 
     public IOkCancelViewModel OkCancelViewModel { get; }
@@ -58,6 +58,12 @@ internal partial class DishEditorViewModel : ViewModelBase, IDishEditorViewModel
     [ObservableProperty]
     private string _dishDescription = string.Empty;
 
+    protected void Ok() => CurrentOperationCallback?.Invoke(GetResultDish());
+
+    protected bool CanInvokeOk() => true; // !string.IsNullOrEmpty(DishName);
+
+    #endregion
+
     private void MoveTagAction(ITagViewModel tag)
     {
         var targetList = ExistingTags.Contains(tag)
@@ -73,19 +79,20 @@ internal partial class DishEditorViewModel : ViewModelBase, IDishEditorViewModel
     /// <summary>
     /// Create new tag, if it does not exist yet; apply it if it does; do nothing otherwise.
     /// </summary>
-    private void ApplyTagToDishAction(ITagViewModel tagViewModel)
+    private async Task ApplyTagToDishAction(ITagViewModel tagViewModel)
     {
-        var tag = DishDescription;
-        DishDescription = "";
+        var tag = tagViewModel.Tag;
         if (string.IsNullOrWhiteSpace(tag))
         {
             return;
         }
 
+        tagViewModel.Tag = "";
         var existingTag = ExistingTags.Concat(AppliedTags).FirstOrDefault(x => x.Tag == tag);
         if (existingTag is null)
         {
             AppliedTags.Add(GetMoveTagButton(tag));
+            await CreateNewTag(tagViewModel);
             return;
         }
 
@@ -98,43 +105,38 @@ internal partial class DishEditorViewModel : ViewModelBase, IDishEditorViewModel
     public void Operate(Dish dish, OperationOptions<Dish, DishEditorParams> options)
     {
         DishName = dish.Name;
+        DishDescription = dish.Description;
         CurrentOperationCallback = options.OperationResultCallback;
-        ExistingTags = new (options.Params.Tags.Select(x => GetMoveTagButton(x.Tag)));
+        ExistingTags = new(options.Params.Tags.Select(x => GetMoveTagButton(x.Tag)));
 
-        AppliedTags = new (dish.Tags.Select(tag => GetMoveTagButton(tag)));
-        AppliedTags.Add(GetAddNewTagToListButton());
+        AppliedTags = new(dish.Tags.Select(tag => GetMoveTagButton(tag)));
+        AppliedTags.Add(AddNewTagToListButton);
     }
 
-    [RelayCommand]
-    private async Task CreateNewTag(string tag)
+    private async Task CreateNewTag(ITagViewModel tagViewModel)
     {
+        var tag = tagViewModel.Tag;
         if (DoesTagExist(tag))
         {
             return;
         }
 
-        var result = await _dishesService.AddTag(tag);
+        await _dishesService.AddTag(tag);
         AppliedTags.Add(GetMoveTagButton(tag));
     }
 
     protected Dish GetResultDish() => new ()
     {
         Name = DishName,
-        Tags = AppliedTags.Where(x => x.Tag != AddTagButtonText.Value).Select(x => x.Tag).ToArray(),
+        Tags = AppliedTags.Where(x => x is not TagInputViewModel).Select(x => x.Tag).ToArray(),
     };
-
-    protected void Ok() => CurrentOperationCallback?.Invoke(GetResultDish());
-
-    protected bool CanInvokeOk() => true; // !string.IsNullOrEmpty(DishName);
 
     private bool DoesTagExist(string tag) => ExistingTags.Concat(AppliedTags).Any(x => x.Tag == tag);
 
     private ITagViewModel GetMoveTagButton(string tag) => new TagButtonViewModel(MoveTagAction, tag);
 
-    private ITagViewModel GetAddNewTagToListButton()
-    {
-        return new TagButtonViewModel(ApplyTagToDishAction, AddTagButtonText.Value);
-    }
+    private ITagViewModel AddNewTagToListButton
+        => new TagInputViewModel(new AsyncRelayCommand<ITagViewModel>(ApplyTagToDishAction));
 
     private string GetAddTagText()
     {

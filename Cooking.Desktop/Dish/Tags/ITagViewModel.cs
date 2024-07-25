@@ -6,5 +6,5 @@ public interface ITagViewModel
 {
     IRelayCommand<ITagViewModel> OnClickCommand { get; }
 
-    string Tag { get; }
+    string Tag { get; set; }
 }

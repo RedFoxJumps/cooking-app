@@ -24,7 +24,7 @@ public partial class App : Application
             services.AddScoped<NewMenuView>().AddScoped<INewMenuViewModel, NewMenuViewModel>();
             services.AddScoped<MenuHistoryView>().AddScoped<IMenuHistoryViewModel, MenuHistoryViewModel>();
             services.AddScoped<CatalogueView>().AddScoped<ICatalogueViewModel, CatalogueViewModel>();
-            services.AddScoped<CatalogueView>().AddScoped<IDishViewModel, DishViewModel>();
+            services.AddScoped<IDishViewModel, DishViewModel>();
 
             services.RegisterServices();
             services.AddScoped<IAsyncRunner, AsyncRunner>();

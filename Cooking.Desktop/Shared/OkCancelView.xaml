@@ -21,14 +21,17 @@
                     HorizontalAlignment="Center"
                     Command="{Binding OkCommand}"
                     Content="{DynamicResource Ok}"
-                    Margin="5"/>
+                    Margin="5"
+                    Width="{Binding
+                            Path=Children[1].ActualWidth,
+                            RelativeSource={RelativeSource AncestorType=Grid}}" />
 
             <Button Grid.Column="1"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"
                     Command="{Binding CancelCommand}"
                     Content="{DynamicResource Cancel}" 
-                    Margin="5"/>
+                    Margin="5" />
         </Grid>
     </GroupBox>
 </UserControl>

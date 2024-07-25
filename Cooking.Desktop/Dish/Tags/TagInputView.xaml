@@ -14,7 +14,7 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Column="0" Text="{Binding Tag}" />
+        <TextBox Grid.Column="0" Text="{Binding Tag, UpdateSourceTrigger=PropertyChanged}" MinWidth="70" AcceptsReturn="False"/>
         <Button Grid.Column="1"
                 Content="{DynamicResource AddPlus}"
                 Command="{Binding OnClickCommand}"
