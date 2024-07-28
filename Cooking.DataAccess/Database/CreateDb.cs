@@ -9,30 +9,30 @@ namespace Cooking.DataAccess.Database;
 
 public static class Db
 {
-    private static readonly IFileSystem _fileSystem = new FileSystem();
-
     public static async Task CreateDefault()
     {
         SQLiteTools.AlwaysCheckDbNull = true;
 
-        if (_fileSystem.File.Exists(Constants.DatabaseFilePath))
+        var fileSystem = new FileSystem();
+        if (fileSystem.File.Exists(Constants.DatabaseFilePath))
         {
             return;
         }
 
         try
         {
-            if (!_fileSystem.Directory.Exists(Constants.Directory))
+            if (!fileSystem.Directory.Exists(Constants.Directory))
             {
-                _fileSystem.Directory.CreateDirectory(Constants.Directory);
+                fileSystem.Directory.CreateDirectory(Constants.Directory);
             }
 
-            SQLiteTools.CreateDatabase(Constants.DatabaseFilePath);
+            SQLiteTools.CreateDatabase(Constants.DatabaseFilePath, deleteIfExists: false);
         }
         catch (Exception e)
         {
         }
-        var newDb = new CookingDatabase();
+
+        await using var newDb = new CookingDatabase();
 
         var blinyId = await FillDishes(newDb);
         var tagIds = await FillTags(newDb);
@@ -88,7 +88,7 @@ public static class Db
 
             new DishEntity { Name = "Сырнікі", },
             new DishEntity { Name = "Бліны", },
-            // bliny,
+
             new DishEntity { Name = "Ладкі (барбуз)", },
             new DishEntity { Name = "Бліны з мачанкай", },
 

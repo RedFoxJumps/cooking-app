@@ -7,5 +7,7 @@ public class CookingDatabase : DataConnection
 {
     public CookingDatabase()
         : base(ProviderName.SQLiteMS, Constants.ConnectionString)
-    { }
+    { 
+        Db.CreateDefault();
+    }
 }

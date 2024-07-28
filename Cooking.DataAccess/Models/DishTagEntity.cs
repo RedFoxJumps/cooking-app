@@ -5,7 +5,7 @@ namespace Cooking.DataAccess.Models;
 [Table("DishTag")]
 public class DishTagEntity : IIdentity<int>
 {
-    [PrimaryKey, Identity, Column(Name = "Id")]
+    [PrimaryKey, Identity, Column(Name = nameof(Id))]
     public int Id { get; set; }
 
     [NotNull, Column("Tag")]
