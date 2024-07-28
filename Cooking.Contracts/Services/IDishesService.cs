@@ -12,7 +12,7 @@ public interface IDishesService
 
     Task<DishTag> AddTag(string tag);
 
-    Task LinkTag(DishTag tag, Dish dish);
+    Task LinkTags(Dish dish);
 
     Task UnlinkTag(DishTag tag, Dish dish);
 }
