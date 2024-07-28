@@ -21,7 +21,7 @@ public interface ICatalogueViewModel
     Dish? SelectedDish { get; }
 }
 
-internal partial class CatalogueViewModel : ViewModelBase, ICatalogueViewModel
+internal partial class CatalogueViewModel : ViewModelBase, ICatalogueViewModel, IInitializable
 {
     private readonly INavigator _navigator;
     private readonly IMenuService _menuService;
@@ -49,9 +49,11 @@ internal partial class CatalogueViewModel : ViewModelBase, ICatalogueViewModel
 
     private async Task<IList<DishTag>> FetchTags() => await _dishesService.GetTags();
 
-    private void OnCreate(Dish newDish)
+    private async void OnCreate(Dish newDish)
     {
         Dishes.Add(newDish);
+        await _dishesService.AddDish(newDish);
+        _navigator.CloseDialog();
     }
 
     [RelayCommand(CanExecute = nameof(CanShowDishEditView))]
@@ -69,6 +71,13 @@ internal partial class CatalogueViewModel : ViewModelBase, ICatalogueViewModel
 
     private void OnEdit(Dish editedDish)
     {
+        OnPropertyChanged(nameof(Dishes));
+    }
+
+    public async Task Initialize()
+    {
+        var dishes = await _dishesService.GetTaggedDishList();
+        Dishes = new ObservableCollection<Dish>(dishes);
         OnPropertyChanged(nameof(Dishes));
     }
 }
