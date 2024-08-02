@@ -13,9 +13,10 @@ public interface ICookingContext
     ITable<MenuEntity> Menues { get; }
 }
 
-public class CookingContext : ICookingContext
+public class CookingContext : ICookingContext, IDisposable
 {
     private CookingDatabase _cookingDatabase;
+    private bool disposedValue;
 
     public CookingContext(CookingDatabase cookingDatabase)
     {
@@ -32,5 +33,26 @@ public class CookingContext : ICookingContext
         where TEntity : class
     {
         return _cookingDatabase.GetTable<TEntity>();
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!disposedValue)
+        {
+            if (disposing)
+            {
+                _cookingDatabase.Close();
+                _cookingDatabase.Dispose();
+            }
+
+            _cookingDatabase = null;
+            disposedValue = true;
+        }
+    }
+
+    public void Dispose()
+    {
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
     }
 }

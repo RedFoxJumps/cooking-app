@@ -31,12 +31,12 @@
 
             <StackPanel Grid.Row="0" Orientation="Vertical">
                 <TextBlock Text="{DynamicResource Name}" />
-                <TextBox Text="{Binding DishName}" AcceptsReturn="False" />
+                <TextBox Text="{Binding Dish.Name}" AcceptsReturn="False" />
             </StackPanel>
 
             <StackPanel Grid.Row="1" Orientation="Vertical">
                 <TextBlock Text="{DynamicResource Description}" />
-                <TextBox Text="{Binding DishDescription}" AcceptsReturn="True" />
+                <TextBox Text="{Binding Dish.Description}" AcceptsReturn="True" />
             </StackPanel>
 
             <Grid Grid.Row="2">

@@ -19,5 +19,4 @@ public interface IObjectOperator<TObject, TParams>
 }
 
 public record class OperationOptions<TObject, TParams>(
-    Action<TObject> OperationResultCallback,
-    TParams Params);
+    Action<TObject> OperationResultCallback, TParams Params);

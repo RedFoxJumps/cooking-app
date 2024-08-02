@@ -14,13 +14,17 @@ public class InitializeBehavior : Behavior<ContentControl>
 {
     protected override void OnAttached()
     {
-        AssociatedObject.Loaded += OnInitialize;
-
         base.OnAttached();
+        AssociatedObject.Loaded += OnInitialize;
     }
 
     private async void OnInitialize(object? sender, EventArgs e)
     {
+        if (AssociatedObject.DataContext is (null or not IInitializable))
+        {
+            return;
+        }
+
         try
         {
             await (AssociatedObject.DataContext as IInitializable).Initialize();

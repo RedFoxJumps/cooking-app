@@ -14,8 +14,6 @@ public partial class App : Application
 {
     protected override void OnStartup(StartupEventArgs e)
     {
-        base.OnStartup(e);
-
         var hostBuilder = new HostBuilder();
         hostBuilder.ConfigureServices(services =>
         {
@@ -30,7 +28,6 @@ public partial class App : Application
             services.AddScoped<IAsyncRunner, AsyncRunner>();
             services.AddScoped<INavigator, Navigator>();
 
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<CookingDatabase>();
             services.AddScoped<ICookingContext, CookingContext>();
         });
@@ -40,5 +37,7 @@ public partial class App : Application
         var view = host.Services.GetRequiredService<MainView>();
         view.DataContext = host.Services.GetRequiredService<IMainViewModel>();
         view.Show();
+
+        base.OnStartup(e);
     }
 }

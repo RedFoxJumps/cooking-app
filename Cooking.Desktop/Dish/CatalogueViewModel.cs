@@ -37,6 +37,7 @@ internal partial class CatalogueViewModel : ViewModelBase, ICatalogueViewModel, 
     public ObservableCollection<Dish> Dishes { get; set; } = new();
 
     [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(ShowDishEditViewCommand))]
     private Dish _selectedDish;
 
     [RelayCommand]
@@ -49,10 +50,9 @@ internal partial class CatalogueViewModel : ViewModelBase, ICatalogueViewModel, 
 
     private async Task<IList<DishTag>> FetchTags() => await _dishesService.GetTags();
 
-    private async void OnCreate(Dish newDish)
+    private void OnCreate(Dish newDish)
     {
         Dishes.Add(newDish);
-        await _dishesService.AddDish(newDish);
         _navigator.CloseDialog();
     }
 

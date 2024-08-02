@@ -16,9 +16,7 @@ public interface IDishEditorViewModel : IObjectOperator<Dish, DishEditorParams>
 {
     IOkCancelViewModel OkCancelViewModel { get; }
 
-    string DishName { get; set; }
-
-    string DishDescription { get; set; }
+    Dish Dish { get; set; }
 
     ObservableCollection<ITagViewModel> AppliedTags { get; }
 
@@ -28,15 +26,13 @@ public interface IDishEditorViewModel : IObjectOperator<Dish, DishEditorParams>
 internal partial class DishEditorViewModel : ViewModelBase, IDishEditorViewModel
 {
     private readonly IDishesService _dishesService;
-    private Lazy<string> AddTagButtonText { get; }
 
     public DishEditorViewModel(IDishesService dishesService)
     {
         _dishesService = dishesService;
-        AddTagButtonText = new Lazy<string>(GetAddTagText);
         OkCancelViewModel = new OkCancelViewModel
         {
-            OkCommand = new RelayCommand(Ok, CanInvokeOk),
+            OkCommand = new AsyncRelayCommand(Ok, CanInvokeOk),
         };
     }
 
@@ -53,18 +49,39 @@ internal partial class DishEditorViewModel : ViewModelBase, IDishEditorViewModel
     public bool HasChanges { get; set; } = true;
 
     [ObservableProperty]
-    private string _dishName = string.Empty;
+    private Dish _dish = new();
 
-    [ObservableProperty]
-    private string _dishDescription = string.Empty;
+    protected bool CanInvokeOk() => true;
+    protected async Task Ok()
+    {
+        var dishTags = AppliedTags.Where(x => x is not TagInputViewModel).Select(x => x.Tag).ToArray();
+        Dish.Tags = dishTags;
 
-    protected void Ok() => CurrentOperationCallback?.Invoke(GetResultDish());
+        if (Dish.Id.HasValue)
+        {
+            await _dishesService.Update(Dish);
+        }
+        else
+        {
+            await _dishesService.AddDish(Dish);
+        }
 
-    protected bool CanInvokeOk() => true; // !string.IsNullOrEmpty(DishName);
+        CurrentOperationCallback?.Invoke(Dish);
+    }
 
     #endregion
 
-    private void MoveTagAction(ITagViewModel tag)
+    public void Operate(Dish dish, OperationOptions<Dish, DishEditorParams> options)
+    {
+        Dish = dish;
+        CurrentOperationCallback = options.OperationResultCallback;
+        ExistingTags = new(options.Params.Tags.Select(x => GetMoveTagButton(x.Tag)));
+
+        AppliedTags = new(dish.Tags.Select(tag => GetMoveTagButton(tag)));
+        AppliedTags.Add(AddNewTagToListButton);
+    }
+
+    private void MoveTagAction(ITagViewModel? tag)
     {
         var targetList = ExistingTags.Contains(tag)
             ? AppliedTags
@@ -77,17 +94,17 @@ internal partial class DishEditorViewModel : ViewModelBase, IDishEditorViewModel
     }
 
     /// <summary>
-    /// Create new tag, if it does not exist yet; apply it if it does; do nothing otherwise.
+    /// Create new tag, if it does not exist yet; apply it if it does exist; do nothing otherwise.
     /// </summary>
-    private async Task ApplyTagToDishAction(ITagViewModel tagViewModel)
+    private async Task ApplyTagToDishAction(ITagViewModel? tagViewModel)
     {
-        var tag = tagViewModel.Tag;
+        var tag = tagViewModel?.Tag;
         if (string.IsNullOrWhiteSpace(tag))
         {
             return;
         }
 
-        tagViewModel.Tag = "";
+        tagViewModel!.Tag = "";
         var existingTag = ExistingTags.Concat(AppliedTags).FirstOrDefault(x => x.Tag == tag);
         if (existingTag is null)
         {
@@ -102,45 +119,15 @@ internal partial class DishEditorViewModel : ViewModelBase, IDishEditorViewModel
         }
     }
 
-    public void Operate(Dish dish, OperationOptions<Dish, DishEditorParams> options)
-    {
-        DishName = dish.Name;
-        DishDescription = dish.Description;
-        CurrentOperationCallback = options.OperationResultCallback;
-        ExistingTags = new(options.Params.Tags.Select(x => GetMoveTagButton(x.Tag)));
-
-        AppliedTags = new(dish.Tags.Select(tag => GetMoveTagButton(tag)));
-        AppliedTags.Add(AddNewTagToListButton);
-    }
-
     private async Task CreateNewTag(ITagViewModel tagViewModel)
     {
         var tag = tagViewModel.Tag;
-        if (DoesTagExist(tag))
-        {
-            return;
-        }
-
         await _dishesService.AddTag(tag);
         AppliedTags.Add(GetMoveTagButton(tag));
     }
-
-    protected Dish GetResultDish() => new ()
-    {
-        Name = DishName,
-        Tags = AppliedTags.Where(x => x is not TagInputViewModel).Select(x => x.Tag).ToArray(),
-    };
-
-    private bool DoesTagExist(string tag) => ExistingTags.Concat(AppliedTags).Any(x => x.Tag == tag);
 
     private ITagViewModel GetMoveTagButton(string tag) => new TagButtonViewModel(MoveTagAction, tag);
 
     private ITagViewModel AddNewTagToListButton
         => new TagInputViewModel(new AsyncRelayCommand<ITagViewModel>(ApplyTagToDishAction));
-
-    private string GetAddTagText()
-    {
-        var tag = App.Current.Resources["AddPlus"].ToString();
-        return tag ?? "Add +";
-    }
 }
