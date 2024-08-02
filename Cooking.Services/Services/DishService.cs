@@ -1,10 +1,10 @@
-﻿using Cooking.Contracts.Models;
+﻿using LinqToDB;
+using LinqToDB.Data;
+using Cooking.Contracts.Models;
 using Cooking.Contracts.Services;
 using Cooking.DataAccess.Database;
 using Cooking.DataAccess.Models;
 using Cooking.DataAccess.Repository;
-using LinqToDB;
-using LinqToDB.Data;
 
 namespace Cooking.Services;
 
@@ -21,15 +21,24 @@ internal class DishesService : IDishesService
 
     public async Task<int> AddDish(Dish dish)
     {
-        // add 
         var dishId = await _cookingContext.Dishes
             .Value(x => x.Name, dish.Name)
+            .Value(x => x.Description, dish.Description)
             .InsertWithInt32IdentityAsync();
 
         dish.Id = dishId;
         await LinkTags(dish);
 
         return dishId.Value;
+    }
+
+    public async Task Update(Dish dish)
+    {
+        var dishId = await _cookingContext.Dishes
+            .Where(x => x.Id == dish.Id)
+            .Set(x => x.Name, dish.Name)
+            .Set(x => x.Description, dish.Description)
+            .UpdateAsync();
     }
 
     public async Task LinkTags(Dish dish)
@@ -70,8 +79,10 @@ internal class DishesService : IDishesService
         return links.GroupBy(x => x.dish.Id)
             .Select(x => new Dish
             {
+                Id = x.Key,
                 Name = x.First().dish.Name,
-                Tags = x.Select(tag => tag.tag.Tag).ToArray(),
+                Description = x.First().dish.Description,
+                Tags = x.Select(pair => pair.tag.Tag).ToArray(),
             }).ToArray();
     }
 

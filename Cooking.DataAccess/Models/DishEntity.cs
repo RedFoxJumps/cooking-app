@@ -10,4 +10,7 @@ public class DishEntity : IIdentity<int>
 
     [NotNull, Column("Name")]
     public string Name { get; set; }
+
+    [Nullable, Column("Description")]
+    public string Description { get; set; }
 }
